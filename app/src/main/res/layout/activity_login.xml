@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddActivity"
+    tools:context=".Login"
     android:orientation="vertical">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edt_fn"
+        android:id="@+id/edt_email"
         android:layout_marginTop="40dp"
         android:layout_marginHorizontal="30dp"
-        android:hint="Enter First Name"
+        android:hint="Enter Email"
         />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/edt_ln"
+        android:id="@+id/edt_pass"
         android:layout_marginTop="40dp"
         android:layout_marginHorizontal="30dp"
-        android:hint="Enter Last Name"
+        android:hint="Enter Password"
         />
     <LinearLayout
         android:layout_width="match_parent"
@@ -29,19 +29,18 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_add"
-            android:text="Add"
+            android:id="@+id/btn_sig"
+            android:text="Signup"
             android:layout_marginHorizontal="40dp"
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_dis"
-            android:text="Display"
+            android:id="@+id/btn_log"
+            android:text="Login"
             android:layout_marginHorizontal="40dp"
 
             />
 
     </LinearLayout>
-
 </LinearLayout>

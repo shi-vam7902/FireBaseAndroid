@@ -17,12 +17,11 @@ public class MyBaseAdapter extends BaseAdapter {
 
 
     Context context;
-    ArrayList<ContactModel> contactModelsArrayList;
-    public MyBaseAdapter(Context context, ArrayList<ContactModel> contactModelsArrayList) {
+    ArrayList<PeopleModel> contactModelsArrayList;
+    public MyBaseAdapter(Context context, ArrayList<PeopleModel> contactModelsArrayList) {
         this.context = context;
         this.contactModelsArrayList=contactModelsArrayList;
     }
-
 
     @Override
     public int getCount() {
@@ -40,12 +39,13 @@ public class MyBaseAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View convertView = layoutInflater.inflate(R.layout.raw_list, null);
-        final  ContactModel contactModel = (ContactModel) getItem(i);
+
+        convertView = layoutInflater.inflate(R.layout.raw_list,null);
+        final  PeopleModel contactModel = (PeopleModel) getItem(i);
         TextView tvName =  convertView.findViewById(R.id.edt_fn);
-        tvName.setText(contactModelsArrayList.get(i).getFname()+"   "+contactModelsArrayList.get(i).getLname());
+        tvName.setText(contactModelsArrayList.get(i).getFn()+"   "+contactModelsArrayList.get(i).getLn());
         return convertView;
     }
 }

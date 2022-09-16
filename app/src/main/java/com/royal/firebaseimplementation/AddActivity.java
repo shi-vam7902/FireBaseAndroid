@@ -7,61 +7,62 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class update extends AppCompatActivity {
-    EditText edtfn, edtLn;
-    Button btnUpdate;
-     Button btnDelete;
+public class AddActivity extends AppCompatActivity {
 
+
+
+
+    Button btn_Dis;
+    Button btn_Add;
+    EditText edtfn,edtln;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update);
-        btnUpdate.findViewById(R.id.btn_up);
-        btnDelete.findViewById(R.id.btn_dis);
+        setContentView(R.layout.activity_addactivity);
+
+        btn_Dis = findViewById(R.id.btn_dis);
+        btn_Add = findViewById(R.id.btn_add);
+        edtfn = findViewById(R.id.edt_fn);
+        edtln = findViewById(R.id.edt_ln);
 
         firebaseDatabase = FirebaseDatabase.getInstance("https://fir-implementation-c5c5f-default-rtdb.firebaseio.com/");
         databaseReference = firebaseDatabase.getReference("people");
 
-        Intent i = getIntent();
-        String strfn = edtfn.getText().toString();
-        String strln = edtLn.getText().toString();
-        final String strid = i.getStringExtra("KEY_Id");
-        edtfn.setText(strfn);
-        edtLn.setText(strln);
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
+        btn_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(AddActivity.this, "Added", Toast.LENGTH_SHORT).show();
                 String strfn = edtfn.getText().toString();
-                String strln = edtLn.getText().toString();
+                String strln = edtln.getText().toString();
+                String id = databaseReference.push().getKey();
                 PeopleModel peopleModel = new PeopleModel();
-                peopleModel.setId(strid);
+                peopleModel.setId(id);
                 peopleModel.setFn(strfn);
                 peopleModel.setLn(strln);
-
-                databaseReference.child(strid).setValue(peopleModel);
-
-                Intent I = new Intent(update.this,display.class);
-                startActivity(I);
-                finish();
+                databaseReference.child(id).setValue(peopleModel);
+                edtfn.setText("");
+                edtln.setText("");
 
             }
 
         });
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        btn_Dis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                databaseReference.child(strid).removeValue();
-                Intent I = new Intent(update.this,display.class);
-                startActivity(I);
+                Intent i = new Intent(AddActivity.this,display.class);
+
+                startActivity(i);
                 finish();
             }
         });
+
     }
 }

@@ -10,13 +10,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseImplementation">
         <activity
+            android:name=".Login"
+            android:exported="false" />
+        <activity
+            android:name=".signup"
+            android:exported="false" />
+        <activity
             android:name=".update"
             android:exported="false" />
         <activity
             android:name=".display"
             android:exported="false" />
         <activity
-            android:name=".ADDActivity"
+            android:name=".AddActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

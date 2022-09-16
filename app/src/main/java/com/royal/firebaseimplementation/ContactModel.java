@@ -11,6 +11,9 @@ public class ContactModel {
         this.fname = fname;
     }
 
+    public ContactModel() {
+
+    }
 
 
     public String getId() {

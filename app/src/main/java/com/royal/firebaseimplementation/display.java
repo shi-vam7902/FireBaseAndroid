@@ -1,47 +1,77 @@
 package com.royal.firebaseimplementation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.security.Key;
 import java.util.ArrayList;
 
 public class display extends AppCompatActivity {
 
     ListView listView;
-    String products[] = {"Product 1","Product 2","Product 3","Product 4","Product 5"};
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
         listView = findViewById(R.id.list_view);
-        DataBaseHandler db = new DataBaseHandler(this);
-        final ArrayList<ContactModel> contacts = db.getAllRecords();
 
-        MyBaseAdapter myBaseAdapter = new MyBaseAdapter(this,contacts);
-        listView.setAdapter(myBaseAdapter);
+        firebaseDatabase = FirebaseDatabase.getInstance("https://fir-app-64e4f-default-rtdb.firebaseio.com/");
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        databaseReference = firebaseDatabase.getReference("people");
+        ArrayList<PeopleModel> peopleModelArrayList = new ArrayList<>();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()){
+                    PeopleModel peopleModel = dataSnapshot1.getValue(PeopleModel.class);
+                    peopleModelArrayList.add(peopleModel);
+                }
+
+                MyBaseAdapter myBaseAdapter = new MyBaseAdapter(display.this,peopleModelArrayList);
+                listView.setAdapter(myBaseAdapter);
+
+            }
 
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String strfn = contacts.get(i).getFname();
-                String strln =  contacts.get(i).getLname();
-                String strid = contacts.get(i).getId();
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                Log.e("TAG", "onItemClick: "+strfn );
-                Intent I = new Intent(display.this,update.class);
-                I.putExtra("KEY_Fn",strfn);
-                I.putExtra("KEY_Ln",strln);
-                I.putExtra("KEY_Id",strid);
-                startActivity(I);
-                finish();
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent i1 = new Intent(display.this,update.class);
+                i1.putExtra("KEY_fn",peopleModelArrayList.get(i).getFn());
+                i1.putExtra("KEY_ln",peopleModelArrayList.get(i).getLn());
+                i1.putExtra("KEY_id",peopleModelArrayList.get(i).getId());
+                startActivity(i1);
+                finish();
+
+            }
+        });
+
+
     }
 }

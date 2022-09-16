@@ -16,11 +16,11 @@ public class MainActivity extends AppCompatActivity {
 
         GifImageView gifImageView = findViewById(R.id.gif);
         gifImageView.setGifImageResource(R.drawable.giphy);
-        long time = 300;
+        long time = 3000;
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(MainActivity.this,ADDActivity.class);
+                Intent i = new Intent(MainActivity.this, signup.class);
                 startActivity(i);
                 finish();
             }
