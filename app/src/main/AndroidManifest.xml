@@ -9,6 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FirebaseImplementation">
+        <service android:name=".Myservice"/>
+        <activity
+            android:name=".ServiceActivity"
+            android:exported="false" />
         <activity
             android:name=".Login"
             android:exported="false" />
